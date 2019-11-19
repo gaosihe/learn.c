@@ -70,8 +70,8 @@ int main()
 	while (1)
 	{
 		char str;
-		scanf("%c", &str);
-		//str = getchar();
+		//scanf("%c", &str);
+		str = getchar();
 		if (str>='a'&&str<='z')
 		{
 			int a = str - 32;
