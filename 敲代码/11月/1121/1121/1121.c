@@ -1,43 +1,43 @@
-//#define _CRT_SECURE_NO_WARNINGS
-//#include<stdio.h>//ì³²¨ÄÇÆõÊý
-//#include<stdlib.h>
-//int main()
-//{
-//	int n;
-//	scanf("%d", &n);
-//	int a = 1, b = 1, c;
-//	while (n > 2)
-//	{
-//		n -= 1;
-//		c = b;
-//		b = a;
-//		a = b + c;
-//	}
-//	printf("%d", a);
-// system("pause");
-// return 0;
-//}
-//#define _CRT_SECURE_NO_WARNINGS//ººÅµËþ
-//#include<stdio.h>
-//void mov(int n, char a, char b, char c){
-//	if (n == 1){
-//		printf("%c%c\n", a, c);
-//
-//	}
-//	else{
-//		mov(n - 1, a, c, b);
-//		printf("%c%c\n", a, c);
-//		mov(n - 1, b, a, c);
-//	}
-//}
-//int main(){
-//	int n;
-//	scanf("%d", &n);
-//	mov(n, '1', '2', '3');
-//	system("pause");
-//	return 0;
-//}
 #define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>//ì³²¨ÄÇÆõÊý
+#include<stdlib.h>
+int main()
+{
+	int n;
+	scanf("%d", &n);
+	int a = 1, b = 1, c;
+	while (n > 2)
+	{
+		n -= 1;
+		c = b;
+		b = a;
+		a = b + c;
+	}
+	printf("%d", a);
+ system("pause");
+ return 0;
+}
+#define _CRT_SECURE_NO_WARNINGS//ººÅµËþ
+#include<stdio.h>
+void mov(int n, char a, char b, char c){
+	if (n == 1){
+		printf("%c%c\n", a, c);
+
+	}
+	else{
+		mov(n - 1, a, c, b);
+		printf("%c%c\n", a, c);
+		mov(n - 1, b, a, c);
+	}
+}
+int main(){
+	int n;
+	scanf("%d", &n);
+	mov(n, '1', '2', '3');
+	system("pause");
+	return 0;
+}
+#define _CRT_SECURE_NO_WARNINGS//ÇàÍÜÌøÌ¨½×
 #include<stdio.h>
 #include<stdlib.h>
 int main()
