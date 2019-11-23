@@ -24,8 +24,8 @@ int main()
 				a[i] = 0;
 			}
 		}
-		}
-		
+	}
+
 
 	for (i = 0; i < N; i++){
 
@@ -50,12 +50,12 @@ int num(int a[])
 	}
 	return num;
 }
-//#define _CRT_SECURE_NO_WARNINGS
-//#include<stdio.h>
-//#include<stdlib.h>
-//int main()
-//{
-//    
-// system("pause");
-// return 0;
-//}
+#define _CRT_SECURE_NO_WARNINGS
+#include<stdio.h>
+#include<stdlib.h>
+#define N 10
+int main()
+{
+	int a[N] = {};
+ return 0;
+}
