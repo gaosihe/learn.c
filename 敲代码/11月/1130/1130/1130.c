@@ -172,7 +172,6 @@ int main()
 		interface();
 		int choice = 0;
 		scanf("%d", &choice);
-	   
 		if (choice == 1)
 		{
 			game();
