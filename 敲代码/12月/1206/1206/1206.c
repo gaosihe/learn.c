@@ -49,7 +49,7 @@
 //	c = ++a;
 //	b = ++c, c++, ++a, a++;
 //	b += a++ + c;
-//	printf("a = %d b = %d c = %d\n:", a, b, c);
+//	printf("a = %d b = %d c = %d\n:", a, b, c);2
 //	system("pause");
 //	return 0;
 //}
