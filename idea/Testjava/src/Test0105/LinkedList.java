@@ -89,4 +89,63 @@ public class LinkedList {
         }
         return cur;
     }
+    public boolean contains(int toFind) {
+        for (Node cur = head; cur != null; cur = cur.next) {
+            if (cur.data == toFind) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void remove(int toRemove) {
+        // 1. 如果要删除元素是头结点, 特殊处理一下
+        if (head.data == toRemove) {
+            // 头结点要被删掉
+            head = head.next;
+            return;
+        }
+        // 2. 如果要删除元素不是头结点, 找到要删除节点的前一个位置
+        Node prev = searchPrev(toRemove);
+        // 3. 修改引用的指向, 完成删除
+        // prev.next = prev.next.next;
+        Node toDelete = prev.next;
+        prev.next = toDelete.next;
+    }
+
+    private Node searchPrev(int toRemove) {
+        // 找到 toRemove 的前一个节点
+        for (Node cur = head; cur != null
+                && cur.next != null; cur = cur.next) {
+            if (cur.next.data == toRemove) {
+                return cur;
+            }
+        }
+        return null;
+    }
+
+    public void removeAll(int toRemove) {
+        // 1. 先删除非头结点, 需要找到待删除节点的前一个位置
+        //    prev 始终指向 cur 的前一个位置
+        Node prev = head;
+        Node cur = head.next;
+        while (cur != null) {
+            if (cur.data == toRemove) {
+                // cur 节点需要被删除掉
+                prev.next = cur.next;
+                cur = prev.next;
+            } else {
+                // prev 和 cur 同步往后移动
+                prev = cur;
+                cur = cur.next;
+            }
+        }
+        // 2. 处理头结点为要删除节点的情况
+        if (head.data == toRemove) {
+            head = head.next;
+        }
+    }
+
+    public void clear() {
+        head = null;
+    }
 }
