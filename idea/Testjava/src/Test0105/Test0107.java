@@ -6,20 +6,12 @@ public class Test0107 {
         linkedList.addLast(1);
         linkedList.addLast(2);
         linkedList.addLast(3);
-        linkedList.addLast(3);
+        linkedList.addLast(4);
+        linkedList.remove(2);
         linkedList.dispaly();
     }
 
-    //    private static void test(){
-//        LinkedList linkedList=new LinkedList();
-//        linkedList.addLast(1);
-//        linkedList.addLast(2);
-//        linkedList.addLast(3);
-//        linkedList.addLast(3);
-//    }
-//}
     public static void main(String[] args) {
-
         testAddFirst();
     }
 }
