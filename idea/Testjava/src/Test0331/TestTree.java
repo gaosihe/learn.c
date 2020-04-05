@@ -46,7 +46,7 @@ public class TestTree {
 
         return a;
     }
-    public static void preOrder(Node root){
+    public static void preOrder(Node root){//先序遍历
         if(root==null){
             return;
         }
@@ -55,7 +55,7 @@ public class TestTree {
         preOrder(root.right);
     }
 
-    public static void inOrder(Node root){
+    public static void inOrder(Node root){//中序遍历
 
         if(root==null){
             return;
@@ -64,7 +64,7 @@ public class TestTree {
         System.out.print(root.val+ " ");
         inOrder(root.right);
     }
-    public static void postOrder(Node root){
+    public static void postOrder(Node root){//后序遍历
 
         if(root==null){
             return;
