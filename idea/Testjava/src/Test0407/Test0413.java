@@ -1,30 +1,32 @@
 package Test0407;
 
-class Card implements Comparable<Card>{
+import java.util.Comparator;
+
+class Card implements Comparable<Card> {
     public String rank;//点数
     public String suit;//花色
 
-    public Card(String rank,String suit){
-        this.rank=rank;
-        this.suit=suit;
+    public Card(String rank, String suit) {
+        this.rank = rank;
+        this.suit = suit;
     }
 
     @Override
     public boolean equals(Object obj) {
         //按照值来比较this和obj
-        if (this == obj){
+        if (this == obj) {
             return true;
         }
-        if (obj == null){
+        if (obj == null) {
             return false;
         }
         //obj这个类型是否为Card的类型
-        if(!(obj instanceof Card)){
+        if (!(obj instanceof Card)) {
             return false;
         }
         //比较内容
-        Card other = (Card)obj;
-        return this.rank.equals(other.rank)&&this.suit.equals(other.suit);
+        Card other = (Card) obj;
+        return this.rank.equals(other.rank) && this.suit.equals(other.suit);
     }
 
 
@@ -41,7 +43,7 @@ class Card implements Comparable<Card>{
         return rank1 - rank2;
     }
 
-    private int getValue() {
+    public int getValue() {
         int value = 0;
         if ("J".equals(rank)){
             value = 11;
@@ -57,6 +59,23 @@ class Card implements Comparable<Card>{
         return value;
     }
 }
+class CardComparator implements Comparator<Card> {
+    @Override
+    public int compare(Card o1, Card o2) {
+        if (o1 == o2){
+            return 0;
+        }
+        if (o1 == null){
+            return -1;
+        }
+        if (o2 == null){
+            return 1;
+        }
+        int value1 = o1.getValue();
+        int value2 = o2.getValue();
+        return value1-value2;
+    }
+}
 public class Test0413 {
     public static void main(String[] args) {
         Card p = new Card("3","♠");
@@ -70,5 +89,8 @@ public class Test0413 {
 //        System.out.println(p.equals(q));
         System.out.println(p.compareTo(q));
         System.out.println(p.compareTo(o));
+        CardComparator comparator = new CardComparator();
+        System.out.println(comparator.compare (p,q));
+
     }
 }
