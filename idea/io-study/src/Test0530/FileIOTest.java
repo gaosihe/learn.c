@@ -59,4 +59,32 @@ public class FileIOTest {
             System.out.println(s);
         }
     }
+    @Test
+    public void t5() throws FileNotFoundException {//
+        //覆盖的方式
+        FileOutputStream fos = new FileOutputStream("F:\\learn.c\\idea\\io-study\\data\\随便.txt");
+        //追加到文件末尾
+//        FileOutputStream fos = new FileOutputStream("F:\\learn.c\\idea\\io-study\\data\\随便.txt",true);
+        PrintWriter pw = new PrintWriter(fos,true);//自动刷新缓冲区
+        pw.println("追加1");
+        pw.println("追加2");
+        pw.println("追加3");
+//        pw.flush();//手动刷新缓冲区
+    }
+    @Test
+    public void t6() throws IOException {//缓冲输出字符流
+        //覆盖的方式
+        FileOutputStream fos = new FileOutputStream("F:\\learn.c\\idea\\io-study\\data\\随便.txt");
+        //追加到文件末尾
+//        FileOutputStream fos = new FileOutputStream("F:\\learn.c\\idea\\io-study\\data\\随便.txt",true);
+        OutputStreamWriter osw = new OutputStreamWriter(fos);
+        BufferedWriter bw = new BufferedWriter(osw);
+        bw.write("追加1");
+        bw.newLine();
+        bw.write("追加2");
+        bw.newLine();
+        bw.write("追加3");
+        bw.newLine();
+        bw.flush();
+    }
 }
