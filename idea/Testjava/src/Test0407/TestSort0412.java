@@ -32,12 +32,12 @@ public class TestSort0412 {
             while (i < j && array[i] <= base) {
                 i++;
             }
-            //当上面循环结束,i和j要么重合,要么i就指向一个大于best的值
+            //当上面循环结束,i和j要么重合,要么i就指向一个大于base的值
             //从右往左找比基准值小的
             while (i < j && array[j] >= base) {
                 j--;
             }
-            //当上面循环结束,i和j要么重合,要么j就指向一个小于best的值
+            //当上面循环结束,i和j要么重合,要么j就指向一个小于base的值
             swaps(array, i, j);
         }
         //最后把重合元素和基准值进行交换
@@ -157,10 +157,10 @@ public class TestSort0412 {
     }
 
     public static void main(String[] args) {
-        int [] array ={9,5,2,7,3,6,8};
-        //quickSortByLoop(array);
+        int [] array ={2,7,4,8,9,3,6,1,5};
+        quickSort(array);
         //mergeSort(array);
-        mergeSortByLoop(array);
+        //mergeSortByLoop(array);
         System.out.println(Arrays.toString(array));
     }
 }
