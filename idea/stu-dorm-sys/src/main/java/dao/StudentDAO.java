@@ -1,7 +1,9 @@
 package dao;
 
+import model.Page;
 import model.Student;
 import util.DBUtil;
+import util.ThreadLocalHolder;
 
 
 import java.sql.Connection;
@@ -13,7 +15,7 @@ import java.util.List;
 
 public class StudentDAO {
 
-    public static List<Student> query() {
+    public static List<Student> query(Page p) {
         List<Student> list = new ArrayList<>();
         Connection c = null;
         PreparedStatement ps = null;
@@ -21,7 +23,7 @@ public class StudentDAO {
 
         try {
             c = DBUtil.getConnection();
-            String sql = "select s.id," +
+            StringBuilder sql = new StringBuilder("select s.id," +
                     "       s.student_name," +
                     "       s.student_graduate_year," +
                     "       s.student_major," +
@@ -33,8 +35,41 @@ public class StudentDAO {
                     "       b.building_name" +
                     "   from student s" +
                     "         join dorm d ON s.dorm_id = d.id" +
-                    "         join building b ON d.building_id = b.id";
-            ps = c.prepareStatement(sql);
+                    "         join building b ON d.building_id = b.id");
+            if (p.getSearchText()!=null&&p.getSearchText().trim().length()>0){
+                sql.append("    WHERE s.student_name like ?");
+            }
+            if (p.getSortOrder()!=null&&p.getSortOrder().trim().length()>0){
+                //占位符什么情况下可以使用:考虑一个因素:字符串替换占位符,带单引号
+                sql.append("    ORDER BY s.create_time "+p.getSortOrder());
+            }
+
+            //获取总的查询数量
+            StringBuilder countSQL = new StringBuilder("select count(0) count from(");
+            countSQL.append(sql);
+            countSQL.append(")tmp");
+            ps = c.prepareStatement(countSQL.toString());
+            if (p.getSearchText()!=null&&p.getSearchText().trim().length()>0){
+                ps.setString(1,"%"+p.getSearchText()+"%");
+            }
+            rs = ps.executeQuery();
+            while (rs.next()){
+                int count  = rs.getInt("count");//设置到返回数据的total字段,当前方法无法通过返回对象设置
+                //使用ThreadLocal,变量绑定到线程
+                ThreadLocalHolder.get().set(count);
+            }
+
+            //处理业务数据
+            sql.append("    limit ?,?");
+            ps = c.prepareStatement(sql.toString());
+            //页码转换为索引:上一页的页码*每页的数量,注意索引从0开始
+            int idx =(p.getPageNumber()-1)*p.getPageSize();
+            int i = 1;
+            if (p.getSearchText()!=null&&p.getSearchText().trim().length()>0){
+                ps.setString(i++,"%"+p.getSearchText()+"%");
+            }
+            ps.setInt(i++,idx);
+            ps.setInt(i++,p.getPageSize());
             rs = ps.executeQuery();
             while (rs.next()){
                 Student s = new Student();
