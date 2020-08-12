@@ -8,3 +8,9 @@ GROUP BY s_id HAVING avg(s_score)>60;
 
 #3、查询所有学生的学号、姓名、选课数、总成绩
 SELECT s_id 学号,s_name 姓名,count(s_id) 选课数,sum(s_score) 总成绩 FROM student inner join score USING(s_id) GROUP BY s_id;
+#4、查询姓“张”的老师的个数
+SELECT count(t_id) from teacher where t_name like ‘张%’;
+
+#5.查询没学过“张三”老师课的学生的学号、姓名(重点)
+SELECT s_id,s_name from student where s_id not in
+(SELECT s_id from score where c_id = (SELECT c_id from course inner join teacher USING(t_id) where t_name=‘张三’));
