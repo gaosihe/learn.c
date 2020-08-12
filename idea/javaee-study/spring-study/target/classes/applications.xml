@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           https://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 通过bean标签定义bean对象,Spring bean容器是通过id来进行管理得,id相当于bean的名称
+    Spring可以通过id找到bean对象 如果没有id,默认类名小写为id
+    默认单例模式-->
+    <!-- 通过无参得构造方法 创建一个对象,如果该类型没有无参得构造方法就会报错-->
+    <bean id="bit" class="java.lang.String">
+        <constructor-arg value="小比特"/>
+    </bean>
+    <!-- <bean class="java.lang.String"></bean>-->
+    <bean id="d1" class="frank.Duck">
+        <property name="name" value="LadyGaga"></property>
+        <property name="age" value="18"/>
+    </bean>
+
+    <bean id="d2" class="frank.Duck2">
+        <constructor-arg name="n" value="烤鸭"/>
+        <constructor-arg name="a" value="2"/>
+
+    </bean>
+ </beans>
