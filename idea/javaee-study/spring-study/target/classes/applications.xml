@@ -11,14 +11,50 @@
         <constructor-arg value="小比特"/>
     </bean>
     <!-- <bean class="java.lang.String"></bean>-->
+
+    <bean id="s1" class="java.lang.String">
+        <constructor-arg value="LadyGaga"/>
+    </bean>
+
     <bean id="d1" class="frank.Duck">
-        <property name="name" value="LadyGaga"></property>
+        <property name="name" ref="s1" />
         <property name="age" value="18"/>
     </bean>
+    <bean id="d1_2" class="frank.Duck">
+        <property name="name" value="s1" />
+        <property name="age" value="18"/>
+    </bean>
+    <bean id="d1_3" class="frank.Duck">
+        <property name="name" value="s1" />
+        <property name="age" value="18"/>
+    </bean>
+     <bean id ="shop" class="frank.DuckShop">
+         <property name="ducks">
+             <list >
+                 <ref bean="d1"/>
+                 <ref bean="d1_2"/>
+                 <ref bean="d1_3"/>
+             </list>
+         </property>
+     </bean>
 
     <bean id="d2" class="frank.Duck2">
         <constructor-arg name="n" value="烤鸭"/>
         <constructor-arg name="a" value="2"/>
+    </bean>
 
+    <bean id="dk1" class="frank.Duck3">
+        <property name="name" value="北京烤鸭"/>
+        <property name="age" value="2"/>
+        <property name="next" ref="dk2"/>
+    </bean>
+    <bean id="dk2" class="frank.Duck3">
+        <property name="name" value="甜皮鸭"/>
+        <property name="age" value="1"/>
+        <property name="next" ref="dk3"/>
+    </bean>
+    <bean id="dk3" class="frank.Duck3">
+        <property name="name" value="酱鸭"/>
+        <property name="age" value="3"/>
     </bean>
  </beans>
