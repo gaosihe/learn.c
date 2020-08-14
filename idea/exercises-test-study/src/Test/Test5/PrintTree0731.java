@@ -49,7 +49,7 @@ public class PrintTree0731 {
                 if(second != null) q.offer(second);
             } //本层遍历完毕，入结果集
             result.add(new ArrayList(list)); //一定要注意浅拷贝问题
-            list.clear();//将所有节点入栈，进行逆序
+            list.clear();//将所有节点入栈， 进行逆序
             while(!q.isEmpty()){
                 st.push(q.poll());
             }
