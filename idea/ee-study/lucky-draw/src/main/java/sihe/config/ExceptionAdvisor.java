@@ -7,14 +7,17 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.server.MethodNotAllowedException;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import sihe.base.ResponseResult;
+import sihe.exception.BaseException;
 
 import javax.validation.ConstraintViolationException;
 
-@Slf4j
+@Slf4j//lombok定义的日志注解,可以使用log
 @ControllerAdvice
 public class ExceptionAdvisor {
 
@@ -29,7 +32,7 @@ public class ExceptionAdvisor {
             , MethodArgumentTypeMismatchException.class//请求参数类型转换错误
     })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public void handleMethodArgumentTypeMismatchException(Throwable e){
+    public void handleMethodArgumentTypeMismatchException(Throwable e){//400
         log.debug("================================");
         log.debug("Controller方法参数类型转换错误", e);
     }
@@ -39,33 +42,44 @@ public class ExceptionAdvisor {
             , HttpRequestMethodNotSupportedException.class
     })
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
-    public void handleMethodNotAllowedException(Throwable e){
+    public void handleMethodNotAllowedException(Throwable e){//405
         log.debug("================================");
         log.debug("Controller提供的http方法不支持", e);
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseStatus(HttpStatus.NOT_FOUND)//响应状态码404
     public void handleNoHandlerFoundException(Throwable e){
         log.debug("================================");
         log.debug("找不到http请求处理器", e);
     }
 
-//    @ExceptionHandler(BaseException.class)
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public Object handleBaseException(BaseException e){
-//        log.debug("================================");
-//        log.debug("服务端自定义异常", e);
-//        return ResponseResult.error(e.getCode(), e.getMessage());
-//    }
-//
-//    @ExceptionHandler(Throwable.class)
-//    @ResponseStatus(HttpStatus.OK)
-//    @ResponseBody
-//    public Object handleException(Throwable e){
-//        log.error("================================");
-//        log.error("未知异常", e);
-//        return ResponseResult.error();
-//    }
+    /*
+    SpringMVC框架,在调用Contorller方法时,类似这样的处理方式;
+    try{
+        controller,方法调用();
+
+    }catch(){===>@ExceptionHandler需要捕获的异常类
+
+    }//日志的使用
+    根据配置的级别 trace,debug,info,warn,error
+    ,调用方法>=配置的级别就会打印
+     */
+    @ExceptionHandler(BaseException.class)
+    @ResponseStatus(HttpStatus.OK)//返回响应状态码200
+    @ResponseBody
+    public Object handleBaseException(BaseException e){
+        log.debug("================================");
+        log.debug("服务端自定义异常", e);//打印错误信息,异常堆栈信息
+        return ResponseResult.error(e.getCode(), e.getMessage());
+    }
+
+    @ExceptionHandler(Throwable.class)
+    @ResponseStatus(HttpStatus.OK)
+    @ResponseBody
+    public Object handleException(Throwable e){
+        log.error("================================");
+        log.error("未知异常", e);
+        return ResponseResult.error();
+    }
 }
