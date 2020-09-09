@@ -8,12 +8,18 @@
     <result column="award" jdbcType="VARCHAR" property="award" />
     <result column="setting_id" jdbcType="INTEGER" property="settingId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <collection property="luckyMemberIds"
+                ofType="java.lang.Integer"
+                javaType="java.util.ArrayList"
+    >
+      <result column="pre_r_member_id" />
+    </collection>
   </resultMap>
   <sql id="Base_Column_List">
     id, name, count, award, setting_id, create_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from award
     where id = #{id,jdbcType=INTEGER}
@@ -26,10 +32,10 @@
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>
-    insert into award (name, count, award, 
-      setting_id, create_time)
-    values (#{name,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{award,jdbcType=VARCHAR}, 
-      #{settingId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+    insert into award (name, count, award,
+    setting_id, create_time)
+    values (#{name,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{award,jdbcType=VARCHAR},
+    #{settingId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="sihe.model.Award">
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
@@ -102,24 +108,24 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectOne" parameterType="sihe.model.Award" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from award
-    <trim prefix="where" suffixOverrides="and">
+    <trim prefix="where" prefixOverrides="and">
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR}
+        and name = #{name,jdbcType=VARCHAR}
       </if>
       <if test="count != null">
-        count = #{count,jdbcType=INTEGER}
+        and count = #{count,jdbcType=INTEGER}
       </if>
       <if test="award != null">
-        award = #{award,jdbcType=VARCHAR}
+        and award = #{award,jdbcType=VARCHAR}
       </if>
       <if test="settingId != null">
-        setting_id = #{settingId,jdbcType=INTEGER}
+        and setting_id = #{settingId,jdbcType=INTEGER}
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP}
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
       </if>
     </trim>
   </select>
@@ -128,32 +134,47 @@
     from award
   </select>
   <select id="selectByCondition" parameterType="sihe.model.Award" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from award
-    <trim prefix="where" suffixOverrides="and">
+    <trim prefix="where" prefixOverrides="and">
       <if test="name != null">
-        name = #{name,jdbcType=VARCHAR}
+        and name = #{name,jdbcType=VARCHAR}
       </if>
       <if test="count != null">
-        count = #{count,jdbcType=INTEGER}
+        and count = #{count,jdbcType=INTEGER}
       </if>
       <if test="award != null">
-        award = #{award,jdbcType=VARCHAR}
+        and award = #{award,jdbcType=VARCHAR}
       </if>
       <if test="settingId != null">
-        setting_id = #{settingId,jdbcType=INTEGER}
+        and setting_id = #{settingId,jdbcType=INTEGER}
       </if>
       <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP}
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
       </if>
     </trim>
   </select>
   <delete id="deleteByIds" parameterType="java.util.List">
     delete from award
-      where id in
+    where id in
     <foreach close=")" collection="list" item="item" open="(" separator=",">
       #{item}
     </foreach>
   </delete>
+
+
+  <select id="query" parameterType="sihe.model.Award" resultMap="BaseResultMap">
+    select a.id,
+           a.name,
+           a.count,
+           a.award,
+           a.setting_id,
+           a.create_time,
+           r.id        pre_r_id,
+           r.member_id pre_r_member_id
+    from award a
+             left join record r on a.id = r.award_id
+    where a.setting_id = #{settingId}
+  </select>
 </mapper>
