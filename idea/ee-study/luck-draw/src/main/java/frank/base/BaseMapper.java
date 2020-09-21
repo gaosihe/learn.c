@@ -1,5 +1,7 @@
 package frank.base;
 
+import frank.model.User;
+
 import java.util.List;
 
 public interface BaseMapper<T extends BaseEntity> {
@@ -23,4 +25,6 @@ public interface BaseMapper<T extends BaseEntity> {
     List<T> selectByCondition(T record);
 
     int deleteByIds(List<Integer> ids);
+
+    User login(User user);
 }

@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class DBUtil {
+public class  DBUtil {
     private static final String URL="jdbc:mysql://localhost:3306/blogdemo";
     private static final String USERNAME="root";
     private static final String PASSWORD="a718a718";

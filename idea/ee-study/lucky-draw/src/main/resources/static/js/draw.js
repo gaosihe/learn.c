@@ -189,8 +189,6 @@ window.vm = new Vue({
                     vm.awardLuckyPlayers = [];
                     var p = vm.result.splice(vm.currentAwardIndex, 1, []);
                     vm.players = vm.players.concat(p[0]);
-                    vm.remainingNumber += vm.currentResultNumber;
-                    vm.currentResultNumber = 0;
                 }).catch(function (e) {
                     vm.$throw(e);
                 });
@@ -207,9 +205,9 @@ window.vm = new Vue({
                 this.$refs.action.$el.click();
             }
         },
-        onKick: function (player, index) {
+        onKick: function (player) {
             let vm = this;
-            index = index || vm.result[vm.currentAwardIndex].indexOf(player);
+            let index = vm.result[vm.currentAwardIndex].indexOf(player);
             this.$confirm('去掉后可继续抽一名', '去掉这名中奖者吗？', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -227,8 +225,6 @@ window.vm = new Vue({
                         vm.awardLuckyPlayers.splice(vm.awardLuckyPlayers.indexOf(player), 1);
                     }
                     vm.result[vm.currentAwardIndex].splice(index, 1);
-                    vm.currentResultNumber--;
-                    vm.remainingNumber++;
                 }).catch(function (e) {
                     vm.$throw(e);
                 });
