@@ -86,7 +86,8 @@ public class StringInMemory {
         // 先执行"计算机软件"，会字符串常量池生成一个字符串对象，之后intern返回是字符串对象的引用
         Assert.assertTrue("计算机软件" == s.intern());//true
         Assert.assertTrue(s.intern() == s);//false
-        Assert.assertTrue(s == "计算机软件");
+        Assert.assertTrue(s == "计算机软件");//false
+        System.out.println(s=="计算机软件");
     }
 
     /**
