@@ -35,7 +35,7 @@ public class super_this {
 
             this.name = name1;
         }
-        public void getInfo(){
+        public  void getInfo(){
             System.out.println(this.name); //Child
             System.out.println(super.name); //Father
         }
